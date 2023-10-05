@@ -1,0 +1,7 @@
+{
+    "email": "<Linkedin_Email>",
+    "password": "<Linkedin_Password>",
+    "keywords": "<Desired positions>",
+    "location": "<Desired locations>",
+    "driver_path": "driver/chromedriver"
+}
