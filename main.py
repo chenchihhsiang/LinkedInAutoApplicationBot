@@ -28,7 +28,6 @@ class EasyApplyLinkedin:
     def discard(self):
         if len(self.driver.find_elements(By.XPATH, "//button[@aria-label='Dismiss']")) > 0:
             time.sleep(2)
-            #WebDriverWait(self.driver, 10).until(EC.element_to_be_clickable((By.XPATH, "//button[@aria-label='Dismiss']"))).click()
             dismiss  = self.driver.find_element(By.XPATH, "//button[@aria-label='Dismiss']")
             time.sleep(2)
             dismiss.send_keys(Keys.RETURN)
@@ -95,8 +94,6 @@ class EasyApplyLinkedin:
         date_posted_btn.click()
         print("...Clicked Date Posted...")
         time.sleep(5)
-        #WebDriverWait(self.driver, 20).until(EC.element_to_be_clickable((By.XPATH, "//span[contains(., 'Past week')]"))).click()
-        #print("...Checked Past week...")
         WebDriverWait(self.driver, 20).until(EC.element_to_be_clickable((By.XPATH, "//span[contains(., 'Past month')]"))).click()
         print("...Checked Past month...")
 
@@ -119,18 +116,7 @@ class EasyApplyLinkedin:
         current_page = self.driver.current_url
         results = self.driver.find_elements(By.CLASS_NAME, "ember-view.jobs-search-results__list-item.occludable-update.p0.relative.scaffold-layout__list-item")
 
-        # for each job add, submits application if no questions asked
-        # applying jobs for the 1st page
-        """
-        for result in results:
-            hover = ActionChains(self.driver).move_to_element(result)
-            hover.perform()
-            titles = result.find_elements(By.CLASS_NAME, "disabled.ember-view.job-card-container__link.job-card-list__title")
-            for title in titles:
-                time.sleep(1)
-                self.submit_apply(title)
-        """
-        # applying jobsfor the rests of pages
+        # applying jobs for the all of pages
         if total_results_int > 24:
             starting_page = 1
             total_pages = 15
@@ -183,8 +169,6 @@ class EasyApplyLinkedin:
                 except TimeoutException:
                     print("...Something went wrong but recovered...")
                     discard()
-                #next  = self.driver.find_element(By.XPATH, "//button[@aria-label='Continue to next step']")
-                #next.send_keys(Keys.RETURN)
                 time.sleep(1)
             else:
                 time.sleep(1)
@@ -208,8 +192,6 @@ class EasyApplyLinkedin:
                 except TimeoutException:
                     print("...Something went wrong but recovered...")
                     discard()
-                #review = self.driver.find_element(By.XPATH, "//button[@aria-label='Review your application']")
-                #review.send_keys(Keys.RETURN)
                 time.sleep(1)
             else:
                 time.sleep(1)
@@ -253,39 +235,12 @@ class EasyApplyLinkedin:
             print("Successfully submit the application")
             time.sleep(2)
         
-        """
-        try:
-            time.sleep(1)
-            submit = self.driver.find_element(By.XPATH, "//button[@aria-label='Submit application']")
-            submit.send_keys(Keys.RETURN)
-            print("Successfully submit the application")
-            time.sleep(2)
-        # ... if not available, discard application and go to next
-        except NoSuchElementException:
-            print('Not direct application, going to next...')
-            try:
-                time.sleep(1)
-                discard = self.driver.find_element(By.XPATH, "//button[@aria-label='Dismiss']")
-                time.sleep(1)
-                discard.send_keys(Keys.RETURN)
-                time.sleep(1)
-                discard_confirm = self.driver.find_element(By.XPATH, "//button[@data-control-name='discard_application_confirm_btn']")
-                time.sleep(2)
-                discard_confirm.send_keys(Keys.RETURN)
-                time.sleep(3)
-            except NoSuchElementException:
-                return
-        """
-        
         if len(self.driver.find_elements(By.XPATH, "//button[@aria-label='Dismiss']")) > 0:
             time.sleep(2)
             try:
                 WebDriverWait(self.driver, 10).until(EC.element_to_be_clickable((By.XPATH, "//button[@aria-label='Dismiss']"))).click()
             except TimeoutException:
                 discard()
-            #dismiss  = self.driver.find_element(By.XPATH, "//button[@aria-label='Dismiss']")
-            #time.sleep(2)
-            #dismiss.send_keys(Keys.RETURN)
             time.sleep(1)
             if len(self.driver.find_elements(By.XPATH, "//button[@data-control-name='discard_application_confirm_btn']")) > 0:
                 time.sleep(2)
